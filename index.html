@@ -4,6 +4,25 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Name That State Flag</title>
+
+<meta name="description" content="Can you identify all 50 U.S. state flags? Test yourself, fill the map, compare your score, and challenge your friends." />
+<link rel="canonical" href="https://raw33.github.io/StateFlagQuiz/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://raw33.github.io/StateFlagQuiz/" />
+<meta property="og:title" content="Name That State Flag — Can You Get All 50?" />
+<meta property="og:description" content="Test your U.S. state flag knowledge, fill the map, compare your score, and challenge your friends." />
+<meta property="og:image" content="https://raw33.github.io/StateFlagQuiz/social-preview.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="State Flag Quiz — Can you name all 50 U.S. state flags?" />
+<meta property="og:site_name" content="State Flag Quiz" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Name That State Flag — Can You Get All 50?" />
+<meta name="twitter:description" content="Test your U.S. state flag knowledge, fill the map, compare your score, and challenge your friends." />
+<meta name="twitter:image" content="https://raw33.github.io/StateFlagQuiz/social-preview.png" />
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 20%27%3E%3Crect width=%2732%27 height=%2720%27 fill=%27%23fff%27/%3E%3Cg fill=%27%23b22234%27%3E%3Crect y=%270%27 width=%2732%27 height=%272%27/%3E%3Crect y=%274%27 width=%2732%27 height=%272%27/%3E%3Crect y=%278%27 width=%2732%27 height=%272%27/%3E%3Crect y=%2712%27 width=%2732%27 height=%272%27/%3E%3Crect y=%2716%27 width=%2732%27 height=%272%27/%3E%3C/g%3E%3Crect width=%2714%27 height=%2710%27 fill=%27%233c3b6e%27/%3E%3Cg fill=%27%23fff%27%3E%3Ccircle cx=%272%27 cy=%272%27 r=%27.7%27/%3E%3Ccircle cx=%276%27 cy=%272%27 r=%27.7%27/%3E%3Ccircle cx=%2710%27 cy=%272%27 r=%27.7%27/%3E%3Ccircle cx=%274%27 cy=%275%27 r=%27.7%27/%3E%3Ccircle cx=%278%27 cy=%275%27 r=%27.7%27/%3E%3Ccircle cx=%2712%27 cy=%275%27 r=%27.7%27/%3E%3Ccircle cx=%272%27 cy=%278%27 r=%27.7%27/%3E%3Ccircle cx=%276%27 cy=%278%27 r=%27.7%27/%3E%3Ccircle cx=%2710%27 cy=%278%27 r=%27.7%27/%3E%3C/g%3E%3C/svg%3E" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..900&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600&display=swap');
@@ -304,6 +323,183 @@
   .share-cta .primary-btn { border-color: var(--paper); background: var(--paper); color: var(--ink); }
   .share-cta .share-toast { max-width: 520px; margin-left: auto; margin-right: auto; }
 
+
+  /* Polished share experience */
+  .share-cta {
+    margin-top: 28px;
+    padding: 28px 24px;
+    border: 1px solid rgba(221,184,119,0.45);
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at 85% 18%, rgba(221,184,119,0.12), transparent 28%),
+      rgba(15,24,48,0.42);
+    text-align: center;
+  }
+  .share-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 7px;
+  }
+  .share-cta-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 24px;
+    margin: 0 0 7px;
+    color: var(--paper);
+  }
+  .share-cta-copy {
+    margin: 0 auto 16px;
+    max-width: 500px;
+    color: #C9C0A4;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .share-cta-actions {
+    display: flex;
+    gap: 9px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .share-main-btn, .copy-quiz-btn {
+    min-width: 150px;
+  }
+  .share-main-btn {
+    border-color: var(--paper) !important;
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+  }
+  .copy-quiz-btn {
+    border-color: rgba(239,230,210,0.45);
+    color: var(--paper);
+  }
+
+  .share-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(7,12,25,0.72);
+    backdrop-filter: blur(6px);
+  }
+  .share-overlay.open { display: flex; }
+  .share-sheet {
+    width: min(520px, 100%);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 18px;
+    border: 1px solid var(--paper-dim);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.48);
+    overflow: hidden;
+  }
+  .share-sheet-head {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--paper-dim);
+  }
+  .share-sheet-copy { flex: 1; }
+  .share-sheet-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0 0 4px;
+  }
+  .share-sheet-sub {
+    margin: 0;
+    color: #6B6148;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .share-close {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--paper-dim);
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 19px;
+    line-height: 1;
+  }
+  .share-destinations {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 16px 20px 10px;
+  }
+  .share-destination {
+    appearance: none;
+    text-decoration: none;
+    border: 1px solid #D5C9AE;
+    background: #fff;
+    color: var(--ink);
+    border-radius: 12px;
+    min-height: 78px;
+    padding: 11px 8px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .share-destination:hover {
+    background: #FAF6EC;
+    box-shadow: 0 5px 14px rgba(22,35,63,0.08);
+    transform: translateY(-1px);
+  }
+  .share-destination:active { transform: translateY(0) scale(.98); }
+  .share-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .share-message-preview {
+    margin: 4px 20px 18px;
+    padding: 12px 13px;
+    background: #E8DEC7;
+    border-radius: 10px;
+    color: #5B5238;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .share-note {
+    margin-top: 7px;
+    color: #8A7E5E;
+    font-size: 10px;
+  }
+
+  @media (max-width: 560px) {
+    .share-overlay {
+      align-items: flex-end;
+      padding: 0;
+    }
+    .share-sheet {
+      border-radius: 18px 18px 0 0;
+      width: 100%;
+    }
+    .share-destinations {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
   .footnote {
     text-align: center; margin-top: 26px; font-size: 11px;
     color: #5E6A8C; font-family: 'IBM Plex Mono', monospace;
@@ -355,9 +551,13 @@
     </section>
 
     <section class="share-cta" aria-label="Share the State Flag Quiz">
+      <div class="share-kicker">Challenge a friend</div>
       <h3 class="share-cta-title">Know someone who'd ace this?</h3>
-      <p class="share-cta-copy">Share the State Flag Quiz and challenge a friend to identify all 50.</p>
-      <button type="button" class="primary-btn" id="shareQuizBtn">Share this quiz</button>
+      <p class="share-cta-copy">Send them the quiz, compare scores, and see who really knows all 50 state flags.</p>
+      <div class="share-cta-actions">
+        <button type="button" class="primary-btn share-main-btn" id="shareQuizBtn">Share the quiz</button>
+        <button type="button" class="ghost-btn copy-quiz-btn" id="copyQuizBtn">Copy link</button>
+      </div>
       <div class="share-toast" id="shareQuizToast"></div>
     </section>
 
@@ -374,6 +574,21 @@
         <button type="button" class="ghost-btn" id="cancelReset">Cancel</button>
         <button type="button" class="danger-btn" id="confirmReset">Reset</button>
       </div>
+    </div>
+  </div>
+
+
+  <div class="share-overlay" id="shareOverlay" aria-hidden="true">
+    <div class="share-sheet" role="dialog" aria-modal="true" aria-labelledby="shareSheetTitle">
+      <div class="share-sheet-head">
+        <div class="share-sheet-copy">
+          <h3 class="share-sheet-title" id="shareSheetTitle">Share the quiz</h3>
+          <p class="share-sheet-sub" id="shareSheetSub">Challenge someone to identify all 50 state flags.</p>
+        </div>
+        <button type="button" class="share-close" id="shareCloseBtn" aria-label="Close share menu">×</button>
+      </div>
+      <div class="share-destinations" id="shareDestinations"></div>
+      <div class="share-message-preview" id="shareMessagePreview"></div>
     </div>
   </div>
 
@@ -597,58 +812,100 @@ function buildShareMessage(includeScore) {
   };
 }
 
+function copyShareText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).then(() => true).catch(() => false);
+  }
+  return new Promise(resolve => {
+    const temp = document.createElement("textarea");
+    temp.value = text;
+    temp.setAttribute("readonly", "");
+    temp.style.position = "fixed";
+    temp.style.opacity = "0";
+    document.body.appendChild(temp);
+    temp.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(temp);
+    resolve(ok);
+  });
+}
+
 function openShareMenu(target, includeScore) {
-  if (!target) return;
   const share = buildShareMessage(includeScore);
+  const overlay = document.getElementById("shareOverlay");
+  const destinations = document.getElementById("shareDestinations");
+  const title = document.getElementById("shareSheetTitle");
+  const sub = document.getElementById("shareSheetSub");
+  const preview = document.getElementById("shareMessagePreview");
+  if (!overlay || !destinations) return;
+
+  title.textContent = includeScore && isDone() ? "Share your score" : "Share the quiz";
+  sub.textContent = includeScore && isDone()
+    ? "Your result is ready to challenge your friends."
+    : "Pick where you want to send the challenge.";
+
   const encodedText = encodeURIComponent(share.text);
   const encodedUrl = encodeURIComponent(share.siteUrl);
   const encodedTitle = encodeURIComponent(share.title);
   const encodedSubject = encodeURIComponent(share.subject);
 
-  target.innerHTML = `
-    <div class="share-menu">
-      <div class="share-menu-title">${includeScore && isDone() ? "Share your score" : "Share the quiz"}</div>
-      <div class="share-grid">
-        <a class="share-option" href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener">Facebook</a>
-        <a class="share-option" href="https://twitter.com/intent/tweet?text=${encodedText}" target="_blank" rel="noopener">X / Twitter</a>
-        <a class="share-option" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="share-option" href="https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}" target="_blank" rel="noopener">Reddit</a>
-        <a class="share-option" href="mailto:?subject=${encodedSubject}&body=${encodedText}">Email</a>
-        <button type="button" class="share-option native-share-btn">More…</button>
-      </div>
-    </div>
+  destinations.innerHTML = `
+    <button type="button" class="share-destination facebook-share">
+      <span class="share-icon">f</span><span>Facebook</span>
+    </button>
+    <a class="share-destination" href="https://twitter.com/intent/tweet?text=${encodedText}" target="_blank" rel="noopener">
+      <span class="share-icon">𝕏</span><span>X</span>
+    </a>
+    <a class="share-destination" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}" target="_blank" rel="noopener">
+      <span class="share-icon">in</span><span>LinkedIn</span>
+    </a>
+    <a class="share-destination" href="https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}" target="_blank" rel="noopener">
+      <span class="share-icon">r/</span><span>Reddit</span>
+    </a>
+    <a class="share-destination" href="mailto:?subject=${encodedSubject}&body=${encodedText}">
+      <span class="share-icon">✉</span><span>Email</span>
+    </a>
+    <button type="button" class="share-destination native-share-btn">
+      <span class="share-icon">↗</span><span>More</span>
+    </button>
   `;
 
-  const nativeShareBtn = target.querySelector(".native-share-btn");
-  if (nativeShareBtn) {
-    nativeShareBtn.addEventListener("click", async () => {
-      if (navigator.share) {
-        try {
-          await navigator.share({ title: "State Flag Quiz", text: share.nativeText, url: share.siteUrl });
-          return;
-        } catch (e) {
-          if (e && e.name === "AbortError") return;
-        }
-      }
+  preview.innerHTML = `${share.text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
+    <div class="share-note">Facebook controls post text itself; the quiz link will use the rich preview image when the site is published with social-preview.png.</div>`;
 
-      let copied = false;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        try { await navigator.clipboard.writeText(share.text); copied = true; } catch (e) {}
+  const fb = destinations.querySelector(".facebook-share");
+  fb?.addEventListener("click", async () => {
+    if (includeScore && isDone()) {
+      await copyShareText(share.nativeText + " " + share.siteUrl);
+    }
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, "_blank", "noopener,noreferrer");
+  });
+
+  const nativeBtn = destinations.querySelector(".native-share-btn");
+  nativeBtn?.addEventListener("click", async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "State Flag Quiz", text: share.nativeText, url: share.siteUrl });
+        closeShareMenu();
+        return;
+      } catch (e) {
+        if (e && e.name === "AbortError") return;
       }
-      if (!copied) {
-        const temp = document.createElement("textarea");
-        temp.value = share.text;
-        temp.setAttribute("readonly", "");
-        temp.style.position = "fixed";
-        temp.style.opacity = "0";
-        document.body.appendChild(temp);
-        temp.select();
-        try { copied = document.execCommand("copy"); } catch (e) {}
-        document.body.removeChild(temp);
-      }
-      nativeShareBtn.textContent = copied ? "Copied!" : "Copy link";
-    });
-  }
+    }
+    const copied = await copyShareText(share.text);
+    nativeBtn.querySelector("span:last-child").textContent = copied ? "Copied" : "Copy";
+  });
+
+  overlay.classList.add("open");
+  overlay.setAttribute("aria-hidden", "false");
+}
+
+function closeShareMenu() {
+  const overlay = document.getElementById("shareOverlay");
+  if (!overlay) return;
+  overlay.classList.remove("open");
+  overlay.setAttribute("aria-hidden", "true");
 }
 
 function render() {
@@ -813,11 +1070,29 @@ const shareQuizBtn = document.getElementById("shareQuizBtn");
 const shareQuizToast = document.getElementById("shareQuizToast");
 if (shareQuizBtn) {
   shareQuizBtn.addEventListener("click", () => {
-    openShareMenu(shareQuizToast, isDone());
+    openShareMenu(null, isDone());
   });
 }
 
 render();
+
+const shareOverlay = document.getElementById("shareOverlay");
+const shareCloseBtn = document.getElementById("shareCloseBtn");
+shareCloseBtn?.addEventListener("click", closeShareMenu);
+shareOverlay?.addEventListener("click", (e) => {
+  if (e.target === shareOverlay) closeShareMenu();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeShareMenu();
+});
+
+document.getElementById("copyQuizBtn")?.addEventListener("click", async () => {
+  const share = buildShareMessage(false);
+  const ok = await copyShareText(share.siteUrl);
+  const toast = document.getElementById("shareQuizToast");
+  if (toast) toast.textContent = ok ? "Quiz link copied." : share.siteUrl;
+});
+
 </script>
 </body>
 </html>
