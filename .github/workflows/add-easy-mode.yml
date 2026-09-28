@@ -1,0 +1,116 @@
+name: Add Easy Mode
+
+on:
+  push:
+    paths:
+      - ".github/workflows/add-easy-mode.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Patch Easy mode into quiz
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          path = Path("index.html")
+          text = path.read_text(encoding="utf-8")
+
+          def replace_once(old, new, label):
+              global text
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{label}: expected 1 match, found {count}")
+              text = text.replace(old, new, 1)
+
+          replace_once(
+              '      <p class="sub">Study the banner and identify the state. Standard gives four choices; Hard lets you search all remaining states with no hints.</p>',
+              '      <p class="sub">Study the banner and identify the state. Easy shows the full flag with four choices; Standard adds identifying redactions; Hard lets you search all remaining states with no hints.</p>',
+              "header description",
+          )
+
+          replace_once(
+              '''    <div class="difficulty-row" aria-label="Quiz difficulty">
+                <button type="button" class="difficulty-btn active" id="standardModeBtn">Standard</button>
+                <button type="button" class="difficulty-btn" id="hardModeBtn">Hard</button>
+              </div>''',
+              '''    <div class="difficulty-row" aria-label="Quiz difficulty">
+                <button type="button" class="difficulty-btn" id="easyModeBtn">Easy</button>
+                <button type="button" class="difficulty-btn active" id="standardModeBtn">Standard</button>
+                <button type="button" class="difficulty-btn" id="hardModeBtn">Hard</button>
+              </div>''',
+              "difficulty buttons",
+          )
+
+          replace_once(
+              '''let quizMode = "standard";
+
+          const standardModeBtn = document.getElementById("standardModeBtn");
+          const hardModeBtn = document.getElementById("hardModeBtn");
+
+          function setQuizMode(mode) {
+            quizMode = mode === "hard" ? "hard" : "standard";
+            standardModeBtn.classList.toggle("active", quizMode === "standard");
+            hardModeBtn.classList.toggle("active", quizMode === "hard");
+            render();
+          }
+
+          standardModeBtn.addEventListener("click", () => setQuizMode("standard"));
+          hardModeBtn.addEventListener("click", () => setQuizMode("hard"));''',
+              '''let quizMode = "standard";
+
+          const easyModeBtn = document.getElementById("easyModeBtn");
+          const standardModeBtn = document.getElementById("standardModeBtn");
+          const hardModeBtn = document.getElementById("hardModeBtn");
+
+          function setQuizMode(mode) {
+            quizMode = mode === "easy" ? "easy" : (mode === "hard" ? "hard" : "standard");
+            easyModeBtn.classList.toggle("active", quizMode === "easy");
+            standardModeBtn.classList.toggle("active", quizMode === "standard");
+            hardModeBtn.classList.toggle("active", quizMode === "hard");
+            render();
+          }
+
+          easyModeBtn.addEventListener("click", () => setQuizMode("easy"));
+          standardModeBtn.addEventListener("click", () => setQuizMode("standard"));
+          hardModeBtn.addEventListener("click", () => setQuizMode("hard"));''',
+              "mode selection logic",
+          )
+
+          replace_once(
+              '          ${revealing ? "" : quizMasksHtml(cur.abbr)}',
+              '          ${revealing || quizMode === "easy" ? "" : quizMasksHtml(cur.abbr)}',
+              "easy mode mask bypass",
+          )
+
+          path.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Validate patch
+        shell: bash
+        run: |
+          grep -q 'id="easyModeBtn"' index.html
+          grep -q 'quizMode === "easy"' index.html
+          grep -Fq 'revealing || quizMode === "easy" ? "" : quizMasksHtml(cur.abbr)' index.html
+
+      - name: Commit patched quiz
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Add Easy mode with unredacted flags"
+          git push
