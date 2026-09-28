@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Name That State Flag — Easy</title>
+  <meta name="description" content="Easy version of Name That State Flag: full, unblurred flags with four answer choices." />
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #0F1830; }
+    #quizFrame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; visibility: hidden; background: #0F1830; }
+  </style>
+</head>
+<body>
+  <iframe id="quizFrame" src="./" title="Name That State Flag — Easy"></iframe>
+  <script>
+    const frame = document.getElementById("quizFrame");
+
+    frame.addEventListener("load", () => {
+      try {
+        const win = frame.contentWindow;
+        const doc = frame.contentDocument;
+
+        if (typeof win.setQuizMode === "function") {
+          win.setQuizMode("standard");
+        }
+
+        const style = doc.createElement("style");
+        style.textContent = [
+          ".quiz-mask { display: none !important; }",
+          ".difficulty-row { display: none !important; }"
+        ].join("\n");
+        doc.head.appendChild(style);
+
+        const subtitle = doc.querySelector(".sub");
+        if (subtitle) {
+          subtitle.textContent = "Easy mode: study the full flag and choose from four states.";
+        }
+
+        frame.style.visibility = "visible";
+      } catch (error) {
+        frame.style.visibility = "visible";
+        console.error("Easy mode setup failed:", error);
+      }
+    });
+  </script>
+</body>
+</html>
